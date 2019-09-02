@@ -1,0 +1,8 @@
+config/Notary/
+config/PartyA/
+config/PartyB/
+config/PartyC/
+config/PartyD/
+config/.cache/
+config/diagnostic-*
+config/node-*

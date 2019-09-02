@@ -1,0 +1,123 @@
+version: "3.4"
+services:
+
+  notary:
+    image: ${CORDA_IMAGE}
+    volumes:
+      - ./config/Notary/:/etc/corda
+      - ./config/Notary/additional-node-infos:/opt/corda/additional-node-infos
+      - ./config/Notary/certificates:/opt/corda/certificates
+      - ./config/Notary/cordapps:/opt/corda/cordapps
+      - ./config/Notary/logs:/opt/corda/logs
+    entrypoint:
+      - sh
+      - -c
+    command: 
+      - "cp /etc/corda/network-parameters /opt/corda/ && run-corda"
+    ports:
+      - 0:10200
+      - 0:10201
+      - 0:10202
+      - 0:12222
+    networks:
+      - corda-net
+
+  partya:
+    image: ${CORDA_IMAGE}
+    depends_on: 
+      - notary
+    volumes:
+      - ./config/PartyA/:/etc/corda
+      - ./config/PartyA/additional-node-infos:/opt/corda/additional-node-infos
+      - ./config/PartyA/certificates:/opt/corda/certificates
+      - ./config/PartyA/cordapps:/opt/corda/cordapps
+      - ./config/PartyA/logs:/opt/corda/logs
+    entrypoint:
+      - sh
+      - -c
+    command: 
+      - "cp /etc/corda/network-parameters /opt/corda/ && run-corda"
+    ports:
+      - 0:10200
+      - 0:10201
+      - 0:10202
+      - 0:12222
+    networks:
+      - corda-net
+
+  partyb:
+    image: ${CORDA_IMAGE}
+    depends_on: 
+      - notary
+    volumes:
+      - ./config/PartyB/:/etc/corda
+      - ./config/PartyB/additional-node-infos:/opt/corda/additional-node-infos
+      - ./config/PartyB/certificates:/opt/corda/certificates
+      - ./config/PartyB/cordapps:/opt/corda/cordapps
+      - ./config/PartyB/logs:/opt/corda/logs
+    entrypoint:
+      - sh
+      - -c
+    command: 
+      - "cp /etc/corda/network-parameters /opt/corda/ && run-corda"
+    ports:
+      - 0:10200
+      - 0:10201
+      - 0:10202
+      - 0:12222
+    networks:
+      - corda-net
+
+  partyc:
+    image: ${CORDA_IMAGE}
+    depends_on: 
+      - notary
+    volumes:
+      - ./config/PartyC/:/etc/corda
+      - ./config/PartyC/additional-node-infos:/opt/corda/additional-node-infos
+      - ./config/PartyC/certificates:/opt/corda/certificates
+      - ./config/PartyC/cordapps:/opt/corda/cordapps
+      - ./config/PartyC/logs:/opt/corda/logs
+    entrypoint:
+      - sh
+      - -c
+    command: 
+      - "cp /etc/corda/network-parameters /opt/corda/ && run-corda"
+    ports:
+      - 0:10200
+      - 0:10201
+      - 0:10202
+      - 0:12222
+    networks:
+      - corda-net
+
+  partyd:
+    image: ${CORDA_IMAGE}
+    depends_on: 
+      - notary
+    volumes:
+      - ./config/PartyD/:/etc/corda
+      - ./config/PartyD/additional-node-infos:/opt/corda/additional-node-infos
+      - ./config/PartyD/certificates:/opt/corda/certificates
+      - ./config/PartyD/cordapps:/opt/corda/cordapps
+      - ./config/PartyD/logs:/opt/corda/logs
+    entrypoint:
+      - sh
+      - -c
+    command: 
+      - "cp /etc/corda/network-parameters /opt/corda/ && run-corda"
+    ports:
+      - 0:10200
+      - 0:10201
+      - 0:10202
+      - 0:12222
+    networks:
+      - corda-net
+
+networks:
+  corda-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.222.0/24
